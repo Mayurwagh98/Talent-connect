@@ -1,7 +1,22 @@
 const express = require("express");
-const userAuth = require("../middlewares/auth");
 const router = express.Router();
+const {
+  registerUser,
+  loginUser,
+  getMe,
+  updateUserDetails,
+  forgotPassword,
+  resetPassword,
+  logout,
+} = require("../controllers/auth");
+const { protect } = require("../middleware/auth");
 
-router.get("/chat/:receiverId", userAuth, chat);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.get("/me", protect, getMe);
+router.put("/update", protect, updateUserDetails);
+router.post("/forgotpassword", forgotPassword);
+router.put("/resetpassword/:resettoken", resetPassword);
+router.get("/logout", logout);
 
 module.exports = router;
